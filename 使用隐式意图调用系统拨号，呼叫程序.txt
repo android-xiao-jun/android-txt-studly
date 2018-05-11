@@ -1,0 +1,75 @@
+使用隐式意图调用系统拨号，呼叫程序
+
+Action
+
+
+·拨号Action:Intent.ACTION_DIAL
+·呼叫Action:Intent.ACTION_CALL
+
+Permission
+    ·在Android系统中，敏感操作（涉及隐私的，安全的，可能产生费用的）
+  都需要申请权限，且当应用程序被安装到设备上之前，会列举当前应用程序所申请的权限，用户可以选择继续安装该应用程序，或不安装。
+  
+  ·通话权限为:
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+第一步在MainActivity:
+
+package com.example.intent_intentFilter;  
+  
+import android.net.Uri;  
+import android.os.Bundle;  
+import android.app.Activity;  
+import android.content.Intent;  
+import android.view.Menu;  
+import android.view.View;  
+import android.view.View.OnClickListener;  
+import android.widget.Button;  
+import android.widget.EditText;  
+  
+public class MainActivity extends Activity {  
+    private EditText et_phoneNumber;  
+    private Button btn_dial,btn_call;  
+  
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_main);  
+        et_phoneNumber = (EditText) findViewById(R.id.et_phonenumber);  
+        btn_call = (Button) findViewById(R.id.btn_call);  
+        btn_dial = (Button) findViewById(R.id.btn_dial);  
+        InnerOnClickListener listener = new InnerOnClickListener();  
+        btn_call.setOnClickListener(listener);  
+        btn_dial.setOnClickListener(listener);  
+    }  
+    private class InnerOnClickListener implements OnClickListener{  
+  
+        @Override  
+       public void onClick(View v) {  
+            // TODO Auto-generated method stub  
+            Intent intent = new Intent();  
+            String phonenumber = et_phoneNumber.getText().toString();  
+            //Data的字符串格式为：tel://10086  
+            intent.setData(Uri.parse("tel://"+phonenumber));  
+            switch (v.getId()) {  
+            case R.id.btn_call:  
+                intent.setAction(Intent.ACTION_CALL);  
+                break;  
+            case R.id.btn_dial:  
+                intent.setAction(Intent.ACTION_DIAL);  
+                break;  
+  
+            default:  
+                break;  
+            }  
+  
+  
+        }  
+  
+    }  
+  
+  
+  
+}  
+第二步：在配置文件中加入权限：
+    <uses-permission android:name="android.permission.CALL_PHONE"/>

@@ -1,0 +1,69 @@
+
+android:configChanges="orientation|keyboardHidden|screenSize"
+设置之后无论横屏还是竖屏都会回重启activity
+
+
+
+
+只竖屏显示的话(android:screenOrientation="portrait") 
+只横屏显示的话（android:screenOrientation="landscape"） 
+画面重新载入问题：在默认情况下横竖 切换时会重新载入画面，导致一些不必要的资源浪费，更严重的是画面上保持的数据（特别是游戏方面）也都被重置了（当然你可以在重置前保存这些数据到数据库或者到文本文件中），要怎么避免在横竖 切换时重新载入画面，首先要在 AndroidManifest.xml中找到你所指定的activity 中加上android:configChanges="orientation|keyboardHidden" 
+然后 在activity的逻辑处理中(代码部分)去重载onConfigurationChanged事件，具体代码参考一下： 
+Java代码
+?@Override  
+     public void onConfigurationChanged(Configuration config) {  
+         try {  
+             super.onConfigurationChanged(newConfig);  
+             if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {  
+                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  
+             } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {  
+                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  
+                   
+            }  
+         } catch (Exception ex) {  
+         }  
+     }  
+如果要让软件在横竖屏之间切换，由于横竖屏的高宽会发生转换，有可能会要求不同的布局
+ 可以建两个布局
+ublic void onConfigurationChanged(Configuration newConfig) {
+                super.onConfigurationChanged(newConfig);
+                if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        // land do nothing is ok
+                } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        // port do nothing is ok
+                }
+        } 
+对于横竖屏切换的问题，统计了下，大家的解决办法是： 
+①不理会。。 
+②只竖屏显示(android:screenOrientation="portrait")
+  只横屏显示(android:screenOrientation="landscape")
+③简单的防止重载： 
+  在 AndroidManifest.xml中加入：android:configChanges="orientation|keyboardHidden"
+  在activity中重载onConfigurationChanged事件 
+  @Override
+  public void onConfigurationChanged(Configuration config) {
+  super.onConfigurationChanged(config);
+  }
+④横竖屏分别布局 
+  横竖屏分别布局的方法是： 
+  在res下新建 
+  layout-land 横屏 
+  layout-port 竖屏 
+  然后把layout中的xml文件分别考到以上目录，修改布局就可以了代码中不做任何更改。 
+  在 AndroidManifest.xml文件中的 主Activity中加入 
+  android:configChanges="orientation|keyboardHidden"
+  然后在主Activity中的onConfigurationChanged加入 
+@Override
+public void onConfigurationChanged(Configuration config) {
+super.onConfigurationChanged(config);
+
+if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
+setContentView(R.layout.main); //布局 
+tv = (TextView) findViewById(R.id.EditText01); //控件 
+}
+
+if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+setContentView(R.layout.main); //布局 
+tv = (TextView) findViewById(R.id.EditText01); //控件 
+}
+}

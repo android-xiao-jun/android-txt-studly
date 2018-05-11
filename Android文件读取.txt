@@ -1,0 +1,109 @@
+ String sd = Environment.getExternalStorageState();//获取外部设备
+ File pathsd = Environment.getExternalStorageDirectory();//获取sd卡路径
+ FileOutputStream fos = null;
+                try {
+                    //创建存储文件   以及是否被更改
+                    fos = this.openFileOutput(infotxt, MODE_PRIVATE);
+                    //将string装换成字节传入
+                    fos.write(s.getBytes());
+
+                    File fileStreamPath = getFileStreamPath(infotxt);
+                    String str=new String(fileStreamPath.toString());
+                    mTvShowPath.setText(str+"\n"+s);
+
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "FileNotFoundException", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "IOException", Toast.LENGTH_SHORT).show();
+                } finally {
+                    try {
+                        if (fos != null)
+                            fos.close();
+                        Toast.makeText(this, "保存成功"+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "IOException", Toast.LENGTH_SHORT).show();
+                    }
+                }
+内存读
+FileInputStream fis = this.openFileInput(infotxt);
+                    byte[] b = new byte[fis.available()];
+                    fis.read(b);
+                    String str = new String(b);
+                    Toast.makeText(this, "读取成功", Toast.LENGTH_SHORT).show();
+                    File fileStreamPath = getFileStreamPath(infotxt);
+
+                    String str2=new String(fileStreamPath.toString());
+                    mTvShowPath.setText(str2+"\n"+str);
+
+
+                    fis.close();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "FileNotFoundException", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "IOException", Toast.LENGTH_SHORT).show();
+                }
+sd卡写
+if(sd.equals(Environment.MEDIA_MOUNTED)){
+                  //  File path = Environment.getExternalStorageDirectory();
+                    try {
+                        File file=new File(pathsd,datatxt);
+                        FileOutputStream fossd = new FileOutputStream(file);
+                        fossd.write(s.getBytes());
+
+                        String str=new String(file.toString());
+                        mTvShowPath.setText(str);
+
+                        fossd.close();
+                        Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "FileNotFoundException",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "IOException",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(this, "设备没找到", Toast.LENGTH_SHORT).show();
+                }
+
+sd卡读
+if(sd.equals(Environment.MEDIA_MOUNTED)){
+                    try {
+                        File file=new File(pathsd,datatxt);
+                        FileInputStream fissd = new FileInputStream(file);
+                        byte[] b =new byte[fissd.available()];
+                        fissd.read(b);
+
+                        String str=new String(file.toString());
+                        mTvShowPath.setText(str+"\n"+new String(b));
+
+                        fissd.close();
+                        Toast.makeText(this,"保存成功" , Toast.LENGTH_SHORT).show();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "FileNotFoundException",
+                                Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "IOException",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }else {
+                    Toast.makeText(this, "设备没找到", Toast.LENGTH_SHORT).show();
+                }
+             
+
+
+

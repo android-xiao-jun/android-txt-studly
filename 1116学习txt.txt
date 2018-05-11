@@ -1,0 +1,72 @@
+package ye.vtcsy.com.capturetwo;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import ye.vtcsy.com.capturetwo.R;
+
+/**
+ * Created by Administrator on 2017/11/9.
+ */
+
+public class SplashActivity extends Activity implements View.OnClickListener {
+
+    private Button mBTSend2; //1. 创建变了
+    private Button mBTSend3;
+    private Button mBTSend4;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_edittext);
+
+        //2.关联控件
+        mBTSend2 = (Button) this.findViewById(R.id.bt_send2);
+        mBTSend3 = (Button) this.findViewById(R.id.bt_send3);
+        mBTSend4 = (Button) this.findViewById(R.id.bt_send4);
+        //3.1
+        mBTSend2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(SplashActivity.this, "发送成功2", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //3.2
+        mBTSend3.setOnClickListener(this);
+        //3.3内部类
+        MyListener myListener=new MyListener();
+        mBTSend4.setOnClickListener(myListener);
+
+
+    } // onCreate()
+
+    class MyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(SplashActivity.this, "发送成功4", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+    /*
+     * 点击“发送”按钮的功能
+     * @param view  接收点击的控件对象
+     */
+    public void sendMessage(View view) {
+        // 显示“发送成功”的吐司提示
+        // 参数1：上下文（this 本类的对象）; 参数2：提示信息字符串; 参数3：提示的时长（1s，2s）
+        Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(this, "发送成功3", Toast.LENGTH_SHORT).show();
+    }
+}

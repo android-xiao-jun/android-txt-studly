@@ -1,0 +1,4 @@
+toast
+  // 显示“发送成功”的吐司提示
+  // 参数1：上下文（this 本类的对象）; 参数2：提示信息字符串; 参数3：提示的时长（1s，2s）
+Toast.makeText(SplashActivity.this, "发送成功4", Toast.LENGTH_SHORT).show();

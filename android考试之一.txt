@@ -1,0 +1,472 @@
+第一个界面
+android:orientation="vertical"
+android:gravity="center"
+<EditText
+        android:id="@+id/et_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:hint="用户名"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:hint="密码"/>
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <CheckBox
+        android:id="@+id/cb_remeber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="记住密码"
+        />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:background="@drawable/selector_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"/>
+
+        <Button
+            android:layout_marginLeft="40dp"
+            android:id="@+id/bt_login"
+            android:background="@drawable/selector_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="登录"/>
+    </LinearLayout>
+第二个界面
+android:orientation="vertical"
+<TextView
+        android:id="@+id/tv_user_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="用户名："/>
+
+    <TextView
+        android:id="@+id/tv_user_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="密码："/>
+
+
+    <Button
+        android:id="@+id/bt_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/selector_color"
+        android:text="选择装备"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="生命值："/>
+
+            <ProgressBar
+                android:id="@+id/pb_life"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:max="200"
+                android:progressDrawable="@drawable/progressbar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_life"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="0"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="速度值："/>
+
+            <ProgressBar
+                android:id="@+id/pb_speed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:max="200"
+                android:progressDrawable="@drawable/progressbar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="0"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="攻击力："/>
+
+            <ProgressBar
+                android:id="@+id/pb_hit"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:progressDrawable="@drawable/progressbar"
+                android:max="200" />
+
+            <TextView
+                android:id="@+id/tv_hit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="0"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+第三个界面
+android:orientation="vertical"
+<LinearLayout
+        android:id="@+id/layout_pro1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="宝剑"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_product_life"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生命值：+ 20"/>
+            <TextView
+                android:id="@+id/tv_product_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="速度值：+ 20"/>
+            <TextView
+                android:id="@+id/tv_product_hit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="攻击力：+ 20"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+第一个界面Java
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText mEtUsername;
+    private EditText mEtPassword;
+    private Button mBtLogin;  // 登录
+    private Button mBtCancel;  // 取消
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // 初始化控件
+        initView();
+
+
+
+        // 登录按钮的监听
+        mBtLogin.setOnClickListener(this); // this：MainActivity.this本类的对象，用它实现OnClickListener接口。
+        // 取消按钮的监听
+        mBtCancel.setOnClickListener(this);
+
+
+
+    }
+    private void initView() {
+        mEtUsername = (EditText) findViewById(R.id.et_username);
+        mEtPassword = (EditText) findViewById(R.id.et_password);
+        mBtLogin = (Button) findViewById(R.id.bt_login);
+        mBtCancel = (Button) findViewById(R.id.bt_cancel);
+    }
+
+
+
+    /**
+     * 点击事件的监听方法
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        // 被点击的控件的id ，就应该由 v.getId()得到
+
+        // 判断点击的是哪个按钮  进而实现相应功能
+        switch (  v.getId()  ) {
+            // 登录功能
+            case R.id.bt_login:
+                // 获取用户名和密码   "zhangsan" == " zhangsan "
+                String username = mEtUsername.getText().toString().trim(); // trim() 去除字符串前后的空格
+                String password = mEtPassword.getText().toString().trim();
+
+                // 判空：判断用户名和密码是否为空，为空("" 或 null)，吐司提示，且不跳转界面；否则，跳转界面。
+                // username == "" || password == ""  比较值
+                // a.equals(b)  表示a和b的址是否相同
+                if("".equals(username) || "".equals(password)
+                        || TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
+                   // 为空
+                    Toast.makeText(this, "用户名和密码不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 不为空
+                    // 判断用户名是否是zhangsan，密码是否是123
+                    if ("zhangsan".equals(username) && "123".equals(password)){
+                        // 跳转到UserActivity  “意图” Intent
+                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                        // 携带数据  参数1：键； 参数2：值。 “键值对” “key-value”
+                        intent.putExtra("username" , username);
+                        intent.putExtra("password" , password);
+                        // 开启界面，并发送数据
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            // 取消功能
+            case R.id.bt_cancel:
+                mEtUsername.setText(""); // 空： ""（空字符串） 或 null（空指向）
+                mEtPassword.setText("");
+                break;
+        }
+    }
+}
+public class UserActivity extends AppCompatActivity {
+    // 请求码常量
+    private static final int REQUEST_USERACTIVITY = 1001;
+
+    private TextView mTvUsername;
+    private TextView mTvPassword;
+    // 选择装备的变量
+    private Button mBtSelect;    // 选择装备按钮
+    private ProgressBar mPbLife;  // 生命值进度
+    private ProgressBar mPbSpeed;  // 速度值进度
+    private ProgressBar mPbHit;    // 攻击力进度
+    private TextView mTvLife;     // 生命值
+    private TextView mTvSpeed;   // 速度值
+    private TextView mTvHit;    // 攻击力
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user);
+        // 初始化控件
+        initView();
+        // 获取从MainActivity中传来的用户名和密码
+        Intent intent = this.getIntent();
+        String username = intent.getStringExtra("username");
+        String password = intent.getStringExtra("password");
+        // 显示出用户名和密码
+        mTvUsername.setText("用户名：" + username);
+        mTvPassword.setText("密码：" + password);
+
+        // 选择装备按钮功能
+        mBtSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 意图跳转
+                Intent intent = new Intent(UserActivity.this, ProductActivity.class);
+                // 跳转到ProductActivity并且接收回传的数据
+                // 参数1：意图； 参数2：请求码（口令）。
+                startActivityForResult(intent, REQUEST_USERACTIVITY);
+            }
+        });
+    }
+ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            if (requestCode == REQUEST_USERACTIVITY && resultCode==REQUEST_OK) {
+                
+                    Product product = (Product) data.getSerializableExtra("product");
+                    updateProgress(product);
+            }
+            
+        }
+    }
+private void updateProgress(Product product) {
+        int progress1 = mPbLife.getProgress();
+        int progress2 = mPbSpeed.getProgress();
+        int progress3 = mPbHit.getProgress();
+        mPbLife.setProgress(progress1+product.getProLife());
+        mPbSpeed.setProgress(progress2+product.getProSpeed());
+        mPbHit.setProgress(progress3+product.getProHit());
+        mTvLife.setText(mPbLife.getProgress()+"");
+        mTvSpeed.setText(mPbSpeed.getProgress()+"");
+        mTvHit.setText(mPbHit.getProgress()+"");
+}
+
+private void initView() {
+        mTvUsername = (TextView) findViewById(R.id.tv_user_username);
+        mTvPassword = (TextView) findViewById(R.id.tv_user_password);
+        // 选择装备
+        mBtSelect = (Button) findViewById(R.id.bt_select);
+        mPbLife = (ProgressBar) findViewById(R.id.pb_life);
+        mPbSpeed = (ProgressBar) findViewById(R.id.pb_speed);
+        mPbHit = (ProgressBar) findViewById(R.id.pb_hit);
+        mTvLife = (TextView) findViewById(R.id.tv_life);
+        mTvSpeed = (TextView) findViewById(R.id.tv_speed);
+        mTvHit = (TextView) findViewById(R.id.tv_hit);
+    }
+}
+
+bean包下Java
+public class Product  implements Serializable{
+    private String proName; // 商品名称
+    private int proLife; // 生命值
+    private int proSpeed; // 速度
+    private int proHit; // 攻击力
+    //这句话不输入，，到这里可以快捷键创建下面所有
+    //快捷键Alt+insert键
+    public Product() {
+    }
+    public Product(String proName, int proLife, int proSpeed, int proHit) {
+        this.proName = proName;
+        this.proLife = proLife;
+        this.proSpeed = proSpeed;
+        this.proHit = proHit;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public int getProLife() {
+        return proLife;
+    }
+
+    public void setProLife(int proLife) {
+        this.proLife = proLife;
+    }
+
+    public int getProSpeed() {
+        return proSpeed;
+    }
+
+    public void setProSpeed(int proSpeed) {
+        this.proSpeed = proSpeed;
+    }
+
+    public int getProHit() {
+        return proHit;
+    }
+
+    public void setProHit(int proHit) {
+        this.proHit = proHit;
+    }
+//这句话不输入，快捷键自动输入结束出，下面有括号
+}
+
+商品java
+public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
+    private LinearLayout mLayoutPro;
+    private TextView mTvProName;
+    private TextView mTvProLife;
+    private TextView mTvProHit;
+    private TextView mTvProSpeed;
+    private Product pro;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_product);
+        initView();
+        pro = new Product("宝刀", 80, 55, 56);
+        mTvProName.setText(pro.getProName());
+        mTvProLife.setText("生命值：+ " + pro.getProLife());
+        mTvProSpeed.setText("速度值：+ " + pro.getProSpeed());
+        mTvProHit.setText("攻击力：+ " + pro.getProHit());
+
+        mLayoutPro.setOnClickListener(this);
+    }
+
+    private void initView() {
+        mLayoutPro = (LinearLayout) findViewById(R.id.layout_pro1);
+        mTvProHit = (TextView) findViewById(R.id.tv_product_hit);
+        mTvProLife = (TextView) findViewById(R.id.tv_product_life);
+        mTvProName = (TextView) findViewById(R.id.tv_product_name);
+        mTvProSpeed = (TextView) findViewById(R.id.tv_product_speed);
+    }
+
+    @Override
+    public void onClick(View v) {
+        
+          Intent intent = new Intent(ProductActivity.this, UserActivity.class);
+          intent.putExtra("product", pro);
+          setResult(REQUEST_OK, intent);
+          finish();   
+    }
+}

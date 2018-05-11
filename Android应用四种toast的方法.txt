@@ -1,0 +1,24 @@
+Android应用四种toast的方法
+1.直接在按钮中添加：android:onClick="sendMessage"，并且在.java文件中实现该方法  Toast.makeText(SplashActivity.this, "发送成功1", Toast.LENGTH_SHORT).show();
+2.先创建id属性；
+  private 按钮类型 名字;
+  名字 = (类型) this.findViewById(R.id.id属性);
+  mBTSend2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SplashActivity.this, "发送成功2", Toast.LENGTH_SHORT).show();
+            }
+        });
+3. MyListener myListener = new MyListener();
+   mBTSend3.setOnClickListener(myListener);
+class MyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(SplashActivity.this, "发送成功3", Toast.LENGTH_SHORT).show();
+        }
+    }
+4.实现接口 implements View.OnClickListener
+  public void onClick(View v) {
+          Toast.makeText(SplashActivity.this, "发送成功4", Toast.LENGTH_SHORT).show();
+      }

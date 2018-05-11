@@ -1,0 +1,37 @@
+TextView常用属性
+
+text：显示文本
+textColor：文本颜色
+textSize：字体大小
+textStyle：文字样式
+maxLength：文本长度，超出不显示
+password：文本密码的形式显示***
+gravity：文本位置 比如“居中”
+phoneNumber：电话号码输入
+
+
+
+EditText常用属性
+
+hint：没有输入文本显示的内容
+lines：固定行数，决定EditText的高度
+maxLines：最大行
+minLines：最小行
+scrollHorizontally：是否出现横拉条
+capitalize：是否首字母大写
+editable：是否可编辑
+
+
+Button
+
+
+radioButton 多选按钮
+可以通过线性布局<LinearLayout>的orientation的方向属性控制多选按钮的方向
+<RadioGroup>
+   <RadioButton></RadioButton>
+   <RadioButton></RadioButton>
+   .......
+</RadioGroup>
+
+
+imageView

@@ -1,0 +1,53 @@
+获取系统相机并返回图片（显示）
+注意点：
+FileProvider 类中的 
+META_DATA_FILE_PROVIDER_PATHS ="android.support.FILE_PROVIDER_PATHS";
+android.support.v4.content.FileProvider 
+
+
+获取系统相机
+                File file=new File(getExternalCacheDir(),System.currentTimeMillis()+".png");
+                if (file.exists()){
+                    file.delete();
+                }
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (Build.VERSION.SDK_INT>24){
+                    uriPicFile = FileProvider.getUriForFile(MainActivity.this, "com.jun.test.file", file);
+                }else {
+                    uriPicFile = Uri.fromFile(file);
+                }
+                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,uriPicFile);
+                startActivityForResult(intent,IMAGE_RESULT);
+对相机拍摄的图片显示，在onActivityResult中
+                if (resultCode==RESULT_OK){
+                    try {
+                        Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(uriPicFile));
+                        mIvShowPic.setImageBitmap(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+             }
+一个xml文件
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+   <external-path name="my_images" path=""/>
+</paths>
+清单文件的配置
+        <provider
+            android:authorities="com.jun.test.file"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+
+        </provider>
+一个权限
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

@@ -1,0 +1,6 @@
+调用照相机
+
+
+Intent intent = new Intent();
+intent.setAction("android.media.action.STILL_IMAGE_CAMERA"); 
+startActivity(intent);

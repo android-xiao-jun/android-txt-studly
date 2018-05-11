@@ -1,0 +1,18 @@
+pull解析方式
+    首先呢，外面包装成一个string
+ 获取XmlPullParserFactory实例
+XmlPullParserFactory factory=XmlPullParserFactory.newInstance();
+ 其次
+XmlPullParser xmlPullParser=factory.newPullOarser();
+xmlPullParser.setInput(new StringReader(string));
+
+获取节点类型 eventType=xmlPullParser.getEventType();
+获取节点名字 xmlPullParser.getName();
+获取节点内容 xmlPullParser.nextText();
+
+
+XmlPullParser.END_DOCUMENT  表示文本结束节点
+XmlPullParser.SRART_TAG 表示节点的开始
+XmlPullParser.END_TAG 表示节点的结束
+
+一个循环结束可以通过 eventType=xmlPullParser.next();获取下一个节点类型 （eventType是int类型）

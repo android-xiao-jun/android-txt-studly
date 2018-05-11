@@ -1,0 +1,9 @@
+播放视频主要通过VideoView来实现的
+  setVideoPath  设置要播放的视频文件的位置
+  start  开始或继续播放
+  pause  暂停播放视频
+  resume  将视频重头播放
+  seekTo 从指定位置开始播放视频
+  isPlayeing 判断是否播放视频
+  getDuration 获取载入视频文件的时长
+《相关权限》  android.permission.WRITE_EXTERNAL_STORAGE 需要做运行时权限处理

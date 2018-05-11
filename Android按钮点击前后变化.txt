@@ -1,0 +1,20 @@
+drawable下新建资源文件xml
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorBut1" android:state_pressed="true"/>
+    <item android:drawable="@color/colorBut2"/>
+</selector>
+
+//
+android:state_enabled: 设置触摸或点击事件是否可用状态，一般只在false时设置该属性，表示不可用状态
+android:state_pressed: 设置是否按压状态，一般在true时设置该属性，表示已按压状态，默认为false
+android:state_selected: 设置是否选中状态，true表示已选中，false表示未选中
+android:state_checked: 设置是否勾选状态，主要用于CheckBox和RadioButton，true表示已被勾选，false表示未被勾选
+android:state_checkable: 设置勾选是否可用状态，类似state_enabled，只是state_enabled会影响触摸或点击事件，而state_checkable影响勾选事件
+android:state_focused: 设置是否获得焦点状态，true表示获得焦点，默认为false，表示未获得焦点
+android:state_window_focused: 设置当前窗口是否获得焦点状态，true表示获得焦点，false表示未获得焦点，例如拉下通知栏或弹出对话框时，当前界面就会失去焦点；另外，ListView的ListItem获得焦点时也会触发true状态，可以理解为当前窗口就是ListItem本身
+android:state_activated: 设置是否被激活状态，true表示被激活，false表示未激活，API Level 11及以上才支持，可通过代码调用控件的setActivated(boolean)方法设置是否激活该控件
+android:state_hovered: 设置是否鼠标在上面滑动的状态，true表示鼠标在上面滑动，默认为false
+
+
+http://keeganlee.me/post/android/20150905   获取更多知识

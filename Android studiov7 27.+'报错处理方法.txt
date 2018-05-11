@@ -1,0 +1,67 @@
+Android studio.support:appcompat-v7:27.+'报错
+
+推荐你添加此方法到项目构建.gradle(app)文件中的buildTypes添加:
+repositories { maven { url "https://maven.google.com" }}
+这是因为需要添加google()来解决它，因为你使用到Android studio 3.0中的bug，这里需要全新的梯度插件来解决这个问题，
+
+
+在Android studio 3.0之前:检查你的系统中是否安装了支持库(检查系统中的SDK目录)，或者检查是否安装在SDK管理器中。
+或者正如这个答案所陈述的
+从版本26的支持库开始，确保存储库部分包括一个带有“https://maven.google.com”端点的maven部分
+
+buildTypes {
+repositories {
+    maven {
+         url "https://maven.google.com"
+    }
+}
+release {
+     minifyEnabled false
+     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+  }
+}
+
+
+自己平时用的能运行v7:25.3.1
+compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+
+
+
+
+完整的，无异常v7:27.0.1
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
+
+    defaultConfig {
+        applicationId "com.example.mystudly"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.1.8"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:27.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,319 @@
+<!--自定义dialog背景全透明无边框theme -->  
+    <style name="MyDialog" parent="android:style/Theme.Dialog">  
+        <!--背景颜色及和透明程度-->  
+        <item name="android:windowBackground">@android:color/transparent</item>  
+        <!--是否去除标题 -->  
+        <item name="android:windowNoTitle">true</item>  
+        <!--是否去除边框-->  
+        <item name="android:windowFrame">@null</item>  
+        <!--是否浮现在activity之上-->  
+        <item name="android:windowIsFloating">true</item>  
+        <!--是否模糊-->  
+        <item name="android:backgroundDimEnabled">false</item>  
+    </style>
+
+<?xml version="1.0" encoding="utf-8"?>  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    android:background="#11ffffff">  
+  
+    <LinearLayout  
+        android:layout_width="260dp"  
+        android:layout_height="wrap_content"  
+        android:layout_centerInParent="true"  
+        android:background="@drawable/free_dialog_bg"  
+        android:orientation="vertical">  
+  
+        <TextView  
+            android:id="@+id/title"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:layout_gravity="center"  
+            android:layout_margin="15dp"  
+            android:gravity="center"  
+            android:text="消息提示"  
+            android:textColor="#38ADFF"  
+            android:textSize="16sp" />  
+  
+        <TextView  
+            android:id="@+id/message"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:layout_marginLeft="20dp"  
+            android:layout_marginRight="20dp"  
+            android:text="提示消息" />  
+  
+        <View  
+            android:layout_width="match_parent"  
+            android:layout_height="1px"  
+            android:layout_marginTop="15dp"  
+            android:background="#E4E4E4" />  
+  
+        <LinearLayout  
+            android:layout_width="match_parent"  
+            android:layout_height="40dp"  
+            android:orientation="horizontal">  
+  
+            <Button  
+                android:id="@+id/no"  
+                android:layout_width="0dp"  
+                android:layout_height="match_parent"  
+                android:layout_marginLeft="10dp"  
+                android:layout_weight="1"  
+                android:background="@null"  
+                android:gravity="center"  
+                android:singleLine="true"  
+                android:text="No"  
+                android:textColor="#7D7D7D"  
+                android:textSize="16sp" />  
+  
+            <View  
+                android:layout_width="1px"  
+                android:layout_height="match_parent"  
+                android:background="#E4E4E4" />  
+  
+            <Button  
+                android:id="@+id/yes"  
+                android:layout_width="0dp"  
+                android:layout_height="match_parent"  
+                android:layout_marginRight="10dp"  
+                android:layout_weight="1"  
+                android:background="@null"  
+                android:gravity="center"  
+                android:singleLine="true"  
+                android:text="Yes"  
+                android:textColor="#38ADFF"  
+                android:textSize="16sp" />  
+        </LinearLayout>  
+    </LinearLayout>  
+  
+</RelativeLayout> 
+
+<?xml version="1.0" encoding="utf-8"?>  
+<shape xmlns:android="http://schemas.android.com/apk/res/android">  
+  
+    <solid android:color="#ffffff" />  
+    <stroke  
+        android:width="0.8dp"  
+        android:color="#ffffff" />  
+    <!-- 圆角 -->  
+    <corners android:radius="6dp" />  
+  
+</shape> 
+
+第三步：继承Dialog实现自定义的Dialog，先上代码，供大家欣赏下：
+
+     
+
+ 
+
+[java] view plain copy
+ 
+ 在CODE上查看代码片派生到我的代码片
+package com.world.hello.selfdialog;  
+  
+import android.app.Dialog;  
+import android.content.Context;  
+import android.os.Bundle;  
+import android.view.View;  
+import android.widget.Button;  
+import android.widget.TextView;  
+  
+/** 
+ * 创建自定义的dialog，主要学习其实现原理 
+ * Created by chengguo on 2016/3/22. 
+ */  
+public class SelfDialog extends Dialog {  
+  
+    private Button yes;//确定按钮  
+    private Button no;//取消按钮  
+    private TextView titleTv;//消息标题文本  
+    private TextView messageTv;//消息提示文本  
+    private String titleStr;//从外界设置的title文本  
+    private String messageStr;//从外界设置的消息文本  
+    //确定文本和取消文本的显示内容  
+    private String yesStr, noStr;  
+  
+    private onNoOnclickListener noOnclickListener;//取消按钮被点击了的监听器  
+    private onYesOnclickListener yesOnclickListener;//确定按钮被点击了的监听器  
+  
+    /** 
+     * 设置取消按钮的显示内容和监听 
+     * 
+     * @param str 
+     * @param onNoOnclickListener 
+     */  
+    public void setNoOnclickListener(String str, onNoOnclickListener onNoOnclickListener) {  
+        if (str != null) {  
+            noStr = str;  
+        }  
+        this.noOnclickListener = onNoOnclickListener;  
+    }  
+  
+    /** 
+     * 设置确定按钮的显示内容和监听 
+     * 
+     * @param str 
+     * @param onYesOnclickListener 
+     */  
+    public void setYesOnclickListener(String str, onYesOnclickListener onYesOnclickListener) {  
+        if (str != null) {  
+            yesStr = str;  
+        }  
+        this.yesOnclickListener = onYesOnclickListener;  
+    }  
+  
+    public SelfDialog(Context context) {  
+        super(context, R.style.MyDialog);  
+    }  
+  
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.free_exercise_sure_dialog_layout);  
+        //按空白处不能取消动画  
+        setCanceledOnTouchOutside(false);  
+  
+        //初始化界面控件  
+        initView();  
+        //初始化界面数据  
+        initData();  
+        //初始化界面控件的事件  
+        initEvent();  
+          
+    }  
+  
+    /** 
+     * 初始化界面的确定和取消监听器 
+     */  
+    private void initEvent() {  
+        //设置确定按钮被点击后，向外界提供监听  
+        yes.setOnClickListener(new View.OnClickListener() {  
+            @Override  
+            public void onClick(View v) {  
+                if (yesOnclickListener != null) {  
+                    yesOnclickListener.onYesClick();  
+                }  
+            }  
+        });  
+        //设置取消按钮被点击后，向外界提供监听  
+        no.setOnClickListener(new View.OnClickListener() {  
+            @Override  
+            public void onClick(View v) {  
+                if (noOnclickListener != null) {  
+                    noOnclickListener.onNoClick();  
+                }  
+            }  
+        });  
+    }  
+  
+    /** 
+     * 初始化界面控件的显示数据 
+     */  
+    private void initData() {  
+        //如果用户自定了title和message  
+        if (titleStr != null) {  
+            titleTv.setText(titleStr);  
+        }  
+        if (messageStr != null) {  
+            messageTv.setText(messageStr);  
+        }  
+        //如果设置按钮的文字  
+        if (yesStr != null) {  
+            yes.setText(yesStr);  
+        }  
+        if (noStr != null) {  
+            no.setText(noStr);  
+        }  
+    }  
+  
+    /** 
+     * 初始化界面控件 
+     */  
+    private void initView() {  
+        yes = (Button) findViewById(R.id.yes);  
+        no = (Button) findViewById(R.id.no);  
+        titleTv = (TextView) findViewById(R.id.title);  
+        messageTv = (TextView) findViewById(R.id.message);  
+    }  
+  
+    /** 
+     * 从外界Activity为Dialog设置标题 
+     * 
+     * @param title 
+     */  
+    public void setTitle(String title) {  
+        titleStr = title;  
+    }  
+  
+    /** 
+     * 从外界Activity为Dialog设置dialog的message 
+     * 
+     * @param message 
+     */  
+    public void setMessage(String message) {  
+        messageStr = message;  
+    }  
+  
+    /** 
+     * 设置确定按钮和取消被点击的接口 
+     */  
+    public interface onYesOnclickListener {  
+        public void onYesClick();  
+    }  
+  
+    public interface onNoOnclickListener {  
+        public void onNoClick();  
+    }  
+}  
+
+主actvitiy的代码如下:
+
+ 
+
+[java] view plain copy
+ 
+ 在CODE上查看代码片派生到我的代码片
+package com.world.hello.selfdialog;  
+  
+import android.support.v7.app.AppCompatActivity;  
+import android.os.Bundle;  
+import android.view.View;  
+import android.widget.Toast;  
+  
+public class MainActivity extends AppCompatActivity {  
+  
+    private SelfDialog selfDialog;  
+  
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_main);  
+  
+        findViewById(R.id.self_dialog).setOnClickListener(new View.OnClickListener() {  
+            @Override  
+            public void onClick(View v) {  
+  
+                selfDialog = new SelfDialog(MainActivity.this);  
+                selfDialog.setTitle("提示");  
+                selfDialog.setMessage("确定退出应用?");  
+                selfDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {  
+                    @Override  
+                    public void onYesClick() {  
+                        Toast.makeText(MainActivity.this,"点击了--确定--按钮",Toast.LENGTH_LONG).show();  
+                        selfDialog.dismiss();  
+                    }  
+                });  
+                selfDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {  
+                    @Override  
+                    public void onNoClick() {  
+                        Toast.makeText(MainActivity.this,"点击了--取消--按钮",Toast.LENGTH_LONG).show();  
+                        selfDialog.dismiss();  
+                    }  
+                });  
+                selfDialog.show();  
+            }  
+        });  
+    }  
+}  

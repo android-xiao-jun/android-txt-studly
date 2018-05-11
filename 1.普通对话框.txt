@@ -1,0 +1,18 @@
+Dialog
+
+1.普通对话框
+  setTitle（）设置对话标题
+  setIcon（）设置对话图标
+  setPositiveButton（）设置对话框添加yes按钮
+  setNegativeButton（）设置对话框添加no按钮
+  setMessage（）设置对话框提示信息
+
+AlertDialog dialog;//先声明
+        dialog=new AlertDialog.Builder(this).setTitle("Dialog对话框")
+        .setMessage("是否确定退出?")
+        .setIcon(R.mipmap.ic_launcher)
+        .setPositiveButton("确定",null)
+        .setNegativeButton("取消",null)
+        .create();
+        dialog.show();//show显示 出来
+

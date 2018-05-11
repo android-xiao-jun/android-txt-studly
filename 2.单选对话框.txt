@@ -1,0 +1,9 @@
+2.单选对话框
+new AlertDialog.Builer(this)
+        .setTitle("请选择性别")
+        .setIcon(R.mipmap.ic_launcher)
+        .setSingleChoiceItems(new String[]{"男","女"},0,
+                 new DialogInterface.oncClick(DialogInterface dialog,int which){}})
+        .setPositiveButton("确定"，null)
+        .show
+  //setSingleChoiceItems方法中三个参数1.建立数组2.0表示默认选中的第一个选项3.设置监听，允许被点击

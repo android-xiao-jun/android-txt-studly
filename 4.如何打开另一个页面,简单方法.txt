@@ -1,0 +1,6 @@
+如何打开另一个页面,简单方法（显式意图）
+
+Intent intent=new Intent(this,java文件.class);
+startActivity(intent);
+
+?startActivity(new Intent(this,java文件.class));

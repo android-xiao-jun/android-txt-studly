@@ -1,0 +1,7 @@
+3.多选对话框
+new AlertDialog.Builer(this)
+        .setTitle("添加兴趣爱好！")
+        .setIcon(R.mipmap.ic_launcher)
+        .setSingleChoiceItems(new String[]{"旅游","没事","汽车","宠物"},null,null})
+        .setPositiveButton("确定"，null)
+        .show

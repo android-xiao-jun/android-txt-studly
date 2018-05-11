@@ -1,0 +1,173 @@
+
+Android实现底部弹出按钮菜单
+xml
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_QQ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="分享到QQ"
+            android:textColor="#000000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000000" />
+        <Button
+            android:id="@+id/btn_sina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="分享到新浪"
+            android:textColor="#000000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000000" />
+        <Button
+            android:id="@+id/btn_wechatfirend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="分享到微信好友"
+            android:textColor="#000000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000000" />
+        <Button
+            android:id="@+id/btn_wechatfirend1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="分享到微信朋友圈"
+            android:textColor="#000000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000000" />
+
+        <Button
+            android:id="@+id/btn_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="分享到更多..."
+            android:textColor="#000000" />
+
+        <Button
+            android:layout_marginTop="20px"
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="30px"
+            android:text="取消"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+</RelativeLayout>
+style
+ <style name="photo_dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+
+
+    </style>
+Java
+ private void getShareMune() {
+
+        final Dialog mdialog = new Dialog(this, R.style.photo_dialog);
+        mdialog.setContentView(View.inflate(this, R.layout.test_layout, null));
+        // 弹出对话框
+        Window window = mdialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.BOTTOM;
+        lp.y = 20;
+        window.setContentView(R.layout.test_layout);
+        final Button qq = (Button) window.findViewById(R.id.btn_QQ);
+        final Button sina = (Button) window.findViewById(R.id.btn_sina);
+        final Button firend = (Button) window.findViewById(R.id.btn_wechatfirend);
+        final Button firend1 = (Button) window.findViewById(R.id.btn_wechatfirend1);
+        final Button more = (Button) window.findViewById(R.id.btn_more);
+        final Button back = (Button) window.findViewById(R.id.btn_cancel);
+
+        //QQ
+        qq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showZiDingYi(QQ.NAME);
+                mdialog.dismiss();
+            }
+        });
+        //新浪
+        sina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//        showZiDingYi(SinaWeibo.NAME);
+             mdialog.dismiss();
+            }
+        });
+        //微信好友
+        firend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //   showZiDingYi(Wechat.NAME);
+              mdialog.dismiss();
+            }
+        });
+        //微信朋友圈
+        firend1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // showZiDingYi(WechatMoments.NAME);
+               mdialog.dismiss();
+            }
+        });
+        //更多
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mdialog.dismiss();
+            }
+        });
+        //取消
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mdialog.dismiss();
+            }
+        });
+        mdialog.show();
+
+    }
+同时
+case R.id.tv_forgetpas:
+                getShareMune();
+                break;

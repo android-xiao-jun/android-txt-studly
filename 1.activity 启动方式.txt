@@ -1,0 +1,22 @@
+activity 启动方式
+<activity android:name"" android:launchMode="singleTop"></activity>
+
+
+1.standard    标准启动模式。一个activity默认启动模式，开启新的activity就会创建出来，加入到任务栈中（也就是一层一层的，可以在同一个界面打开多次）
+
+2.singleTop   单一顶部启动模式。如果发现这个activity已经启动了，并且在任务张顶，activity就不会创建了（也就是，能在两个不同任务之间来回创建，不能再同一个活动上创建多次）（例如：添加书签）
+（在同一个任务栈可以有多个实例存在）
+
+3. singletask  单一任务栈启动模式。开启新的activity的时候，会去检查任务栈里面是否有这个activity的实例存在，就直接清空这个实例上面所有的activity，复用这个已经保存在的activity实例。
+（同一个任务栈中只有一个实例存在，消耗内存很大时可以选择使用）
+
+4.singleinstance 单一实例变量。类似于Java单例模式，DNA状态模式，只有一个实例存在的时候
+
+5.InCallScreen 通话的activity哦诶之模式是singleinstance的，在整个手机操作系统中只有一个实例存在
+
+
+注：可以看看Android体系结构相关知识
+
+
+
+

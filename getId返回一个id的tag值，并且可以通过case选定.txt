@@ -1,0 +1,16 @@
+getId返回一个tag值
+public int getId() {
+        return mID;
+    }
+
+    /**
+     * Returns this view's tag. 返回此视图的标记。
+     *
+     * @return the Object stored in this view as a tag, or {@code null} if not
+     *         set 将存储在这个视图中的对象作为标记返回，或者如果没有
+*设置
+     *
+     * @see #setTag(Object)*“看# settag（对象）
+     * @see #getTag(int)
+*“看# gettag（int）
+     */

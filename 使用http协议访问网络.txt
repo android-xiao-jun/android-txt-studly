@@ -1,0 +1,40 @@
+HttpURLConnection访问网络
+    Url url=new Url("http://");
+    HttpURLConnection connection =(HttpURLConnection) url.openConnection();
+    connection.setRequestMethod("GET");
+    connection.setConnectTimeout(5000);
+    connection.setReadTimeout(5000);
+    InputStream in = connection.getInputStream();
+或者post
+    connection.setRequestMethod("POST");
+    DataOutPutStream out =new DataOutputStream(connection.getOutputStream())
+    out.writeBytes("username=admin&&password=123456");
+
+OkHttp()解析http请求
+private void sendOkHttp() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client=new OkHttpClient();
+                    Request request= new Request.Builder()
+                            .url("https://www.douyu.com/")
+                            .build();
+                    Response response=client.newCall(request).execute();
+                    String string = response.body().string();
+                    Log.d("sendOkHttp",""+string);
+                    showHttpUrlString(string);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+提交
+RequestBody body=new FormBody.Builder().add("key","value").add(....).build;
+Request request= new Request.Builder()
+                            .url("https://www.douyu.com/")
+                            .post(body)
+                            .build();

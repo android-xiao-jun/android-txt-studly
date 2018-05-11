@@ -1,0 +1,8 @@
+4.进度条对话框
+ProgressDialog progressDialog;
+        progressDialog= new ProgressDialog(this);
+        progressDialog.setTitle("进度条对话框");
+        progressDialog.setIcon(R.mipmap.ic_launcher);
+        progressDialog.setMessage("正在下载请稍后....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();

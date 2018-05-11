@@ -1,0 +1,11 @@
+AsyncTask 是一个抽象类 继承时可以指定三个泛型参数
+
+params  执行AsyncTask时传入的参数，可用于在后台任务中使用
+Progress 后台在执行时，如果现实当前进度，则这里使用的泛型作为进度单位
+Result  当任务执行完毕后 需要对结果进行返回，则指定泛型为返回值类型
+
+
+一个简单AsyncTask
+class AA extends AsyncTask<Void ,Integer, Boolean>{
+   ...
+}

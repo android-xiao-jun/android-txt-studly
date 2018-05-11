@@ -1,0 +1,22 @@
+            <TextView
+            android:textSize="25sp"
+            android:text="深海高速胶州、莱西服务器封闭施工通知"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:scrollHorizontally="true"  />
+
+
+
+主要代码
+ android:ellipsize="marquee"
+ android:singleLine="true"
+ android:marqueeRepeatLimit="marquee_forever"
+ android:focusableInTouchMode="true"
+ android:focusable="true"
+ android:scrollHorizontally="true"
+貌似少一条都不好使

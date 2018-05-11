@@ -1,0 +1,8 @@
+Android应用标题怎么隐藏  
+第一种：
+继承 Activity 这个大类 --》requestWindowFeature(Window.FEATURE_NO_TITLB); 
+第二种：
+不继承Activity这个类--》if(getSupportActionBar()!=null){getSupportActionBar().hide();}
+第三种：
+继承 Activity 这个大类 --》修改全局样式 <item name="android:windowActionBar">false</item>  <item name="android:windowNoTitle">ture</item>
+

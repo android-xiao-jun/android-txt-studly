@@ -1,0 +1,26 @@
+Apache服务器最新版下载、安装及配置（windows版）
+一.下载
+   http://httpd.apache.org/download.cgi
+   File for microsoft windows
+   Apachehaus
+  点击红框下载
+二.安装
+  解压
+三.配置
+  找到E:\Apache24\conf\httpd.conf文件，用记事本打开，找到Define SRVROOT 这一项
+  将其右方的值“Apache24”改为当前你Apache安装存放的目录地址，这里改为“E:/Apache24”
+  继续找，找到Listene 80，若你的80端口被占用（可在cmd下用命令netstat -ano查看），
+则将80端口改为别的值，然后保存httpd.conf文件
+  打开CMD窗口，输入E:\Apache24\bin\httpd.exe -k install -n apache，然后回车
+  在安装目录中，找到E:\Apache24\bin\ApacheMonitor.exe，双击运行，桌面右下角会出现图标，双击打开窗口界面
+  最后start
+四.测试
+  打开浏览器，输入访问http://localhost（127.0.0.1） 若出现如下图所示页面
+  该页面实际上E:\Apache24\htdocs目录下的index.html，
+  如果要访问自己的网站，比如说MyStation，只需将MyStation文件夹放到htdocs下，
+  并将MyStation内的网站首页改成index.html，
+  然后通过http://localhost/MyStation就可以访问的自己的网站了。
+
+
+
+

@@ -1,0 +1,10 @@
+可以在清单文件中配置方便查看，，，
+但只有在app中的build.gradle中配置
+ defaultConfig {
+        applicationId "com.example.mystudly"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1 //开发者看的，，方便升级
+        versionName "1.0"//显示给用户看
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }

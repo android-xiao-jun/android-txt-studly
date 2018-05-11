@@ -1,0 +1,13 @@
+ivGlide = (ImageView) findViewById(R.id.iv_glide);
+ivGlide.setAlpha((float) 0.5);//…Ë÷√Õ∏√˜∂»
+Glide.with(this).load("").into(ivGlide);
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+implementation 'com.github.bumptech.glide:glide:4.6.1'
+annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+

@@ -1,0 +1,7 @@
+测试网络连通性用到：android.net.conn.CONNECTIVITY_CHANGE
+
+
+判断网络连通性 是 否？
+已加载弹出对话框提示，当前网络状况
+
+

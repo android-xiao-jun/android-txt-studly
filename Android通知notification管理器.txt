@@ -1,0 +1,23 @@
+
+通知notification管理器
+private void notification1() {
+        Intent intent1=new Intent(this,MainActivity.class);
+        PendingIntent pi=PendingIntent.getActivity(this,0,intent1,0);
+        //用来实现 点击之后的操作
+        NotificationManager manager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //获取NotificationManager 的实例
+        Notification notification=new NotificationCompat.Builder(this)
+                .setContentTitle("")
+                .setContentText("")
+                .setWhen(System.currentTimeMillis())//显示提示的时间
+                .setSmallIcon(R.mipmap.user)//小图片（状态栏）
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.user))//大图片
+                .setContentIntent(pi)
+                .setAutoCancel(true)//设置是否自动取消，，就是点击之后取消
+                .setDefaults(NotificationCompat.DEFAULT_ALL) //默认设置所有（声音，方式等）
+                .setPriority(NotificationCompat.PRIORITY_MAX)//优先级
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("多的内容"))
+                .build();
+        manager.notify(1,notification);//参数一：第一个参数是id，要保证为每个通知所指定的id都是不同的。第二个参数则是Notification对象，这里直接将我们刚刚创建好的Notification对
+象传入即可
+    }

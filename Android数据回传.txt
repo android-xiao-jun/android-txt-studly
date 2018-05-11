@@ -1,0 +1,16 @@
+Intent intent = new Intent(AndroidShowActivity.this, PructActivity.class);
+startActivityForResult(intent, RESULT_SELECT);
+
+
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_SELECT && resultCode == RESULT_OK) {
+            Puctick product = (Puctick) data.getSerializableExtra("product2");
+            setResdata(product);
+        }
+    }
+
+Intent intent = new Intent(PructActivity.this, AndroidShowActivity.class);
+        intent.putExtra("product2", puc);
+        setResult(RESULT_OK, intent);
+        finish();

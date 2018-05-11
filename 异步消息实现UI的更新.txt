@@ -1,0 +1,57 @@
+异步消息实现UI的更新
+发送消息
+case R.id.bt_show:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true){
+                            try {
+                                Thread.sleep(1000);
+                                // mTvShowTest.setText("线程中handler");
+                                Message message=new Message();
+                                message.what=1;
+                                handler.sendMessage(message);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+             }).start();
+          break;
+
+处理小心，，实现UI的更新
+ private Handler handler=new Handler(){
+       @Override
+       public void handleMessage(Message msg) {
+           super.handleMessage(msg);
+           switch (msg.what){
+               case 1:
+                   Calendar calendar=Calendar.getInstance();
+                   int year = calendar.get(Calendar.YEAR);
+                   int hour = calendar.get(Calendar.HOUR);
+                   int minute = calendar.get(Calendar.MINUTE);
+                   int second = calendar.get(Calendar.SECOND);
+                   mTvShowTest.setText("线程中handler"+hour+":"+minute+":"+second);
+                   break;
+           }
+       }
+   };
+
+Handler  小心处理者   用于发送和接收小心  
+   如：  handler.sendMessage(message);和 handleMessage(Message msg) 
+
+
+
+Message  线程之间传递的消息 可携带少量信息
+
+
+MessageQueue 消息队列的意思  这部分消息会一直存在消息队列中等待被处理
+
+
+Looper 是每个线程中的MessageQueue的管家， 调用 loop方法，会进入一个无限循环中，然后发现MessageQueue中存在一条消息，就取出
+
+
+
+

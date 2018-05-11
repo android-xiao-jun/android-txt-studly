@@ -1,0 +1,68 @@
+  oncrate
+new TimeThread().start();
+
+
+  public class TimeThread extends  Thread{
+        @Override
+        public void run() {
+            super.run();
+            do{
+                try {
+                    Thread.sleep(1000);//休眠一秒，同时时间也是一秒跳转一次
+                    Message msg = new Message();
+                    msg.what = msgKey1;
+                    mHandler.sendMessage(msg);
+                    // long time = System.currentTimeMillis();
+                    // Date date = new Date(time);
+                    //SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EEE");
+                    //tv_time.setText(format.format(date));
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }while (true);
+        }
+    }
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case msgKey1:
+                    long time = System.currentTimeMillis();
+                    Date date = new Date(time);
+                    String sweek= String.valueOf(date.getDay());
+                    //将获取的星期格式化
+                    switch (Integer.parseInt(sweek)){
+                        case 0 :
+                            sweek="星期日";
+                            break;
+                        case 1 :
+                            sweek="星期一";
+                            break;
+                        case 2 :
+                            sweek="星期二";
+                            break;
+                        case 3 :
+                            sweek="星期三";
+                            break;
+                        case 4 :
+                            sweek="星期四";
+                            break;
+                        case 5 :
+                            sweek="星期五";
+                            break;
+                        case 6 :
+                            sweek="星期六";
+                            break;
+                    }
+                    //SimpleDateFormat输出yyyy MM dd这种格式的日期方法
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+                    mTvShowTime.setText(format.format(date)+"  "+sweek);
+                    //tv_time.setText(year+"年"+month+"月"+day+"日"+sweek);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };

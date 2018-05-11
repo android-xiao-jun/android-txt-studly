@@ -1,0 +1,18 @@
+两种显示意图
+
+1.隐式意图，（动作，数据，协议（category））开启新的activity， 主要用于激活程序的activity
+（效率低，先查询满足条件的activity，在激活）
+Intent intent=new Intent();
+intent.setAction("");
+intent.addCaregory("");
+intent.setData();
+startActivity(intent);
+2.显示意图，直接指定要激活的activity。 
+（效率高，直接指定）
+Intent intent=new Intent();
+intent.setClassName(this,"");
+startActivity(intent);
+
+
+注：如果激活是应用程序内部的activity，用显式，指定包名，效率
+    如果激活的是其他应用成的activity，用隐式，通过action和data

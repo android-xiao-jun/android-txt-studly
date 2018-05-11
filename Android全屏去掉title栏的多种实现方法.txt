@@ -1,0 +1,72 @@
+android全屏去掉title栏的多种实现方法
+android全屏去掉title栏包括以下几个部分:实现应用中的所有activity都全屏/实现单个activity全屏/实现单个activity去掉title栏/自定义标题内容/自定义标题布局等等感兴趣的可参考下啊
+原话android:theme="@style/AppTheme"
+
+1.实现应用中的所有activity都全屏 
+
+在manifest中直接加入 
+复制代码 代码如下:
+android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+
+
+2.实现单个activity全屏 
+复制代码 代码如下:
+
+requestWindowFeature(Window.FEATURE_NO_TITLE); 
+getWindow().setFlags(WindowManager.LayoutParams.TYPE_STATUS_BAR, WindowManager.LayoutParams.TYPE_STATUS_BAR); 
+如果是AppCompatActivity则
+getSupportActionBar().hide();
+
+
+3.实现单个activity去掉title栏 
+
+复制代码 代码如下:
+requestWindowFeature(Window.FEATURE_NO_TITLE); 
+1、改变标题内容：public void setTitle (CharSequence title) 
+2、隐藏标题：requestWindowFeature(Window.FEATURE_NO_TITLE); 
+3、隐藏标题和最上面的电池电量及信号栏（全屏）： 
+复制代码 代码如下:
+public void setFullscreen() { 
+requestWindowFeature(Window.FEATURE_NO_TITLE); 
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+} 
+
+
+4、自定义标题内容 
+
+复制代码 代码如下:
+<activity android:name=".activity.MainActivity" android:screenOrientation="portrait" android:label="@string/titlebar_text" 
+</actibity> 2） 
+MainActivity文件中： 
+复制代码 代码如下:
+requestWindowFeature(Window.FEATURE_NO_TITLE); 
+//设置窗口无标题栏 
+setContentView(R.layout.main); 
+//动态设置标题的值，getTitle()的值是该activity的声明中android:label的值 
+((TextView) findViewById(R.id.titlebar_text)).setText(getTitle()); 
+其中，getTitle()取得的值就是上述 android:label="@string/titlebar_text" 的值 
+
+5、自定义标题布局 
+复制代码 代码如下:
+protected void onCreate(Bundle savedInstanceState) { 
+super.onCreate(savedInstanceState); 
+//预先设置允许改变的窗口状态，需在 setContentView 之前调用，否则设置标题时抛运行时错误。 
+requestWindowFeature(Window.FEATURE_CUSTOM_TITLE); 
+setContentView(R.layout.custom_title); 
+//标题区域可设置为 layout ，如此可以有丰富的展现方式 
+getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, 
+R.layout.custom_title_1); 
+} 
+res\layout\custom_title_1.xml 包含一个TextView 用于显示标题。Android可以把标题做为一个layout来展示，具有很好的扩展性。 
+复制代码 代码如下:
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/screen" 
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+android:orientation="vertical"> 
+<TextView android:id="@+id/left_text" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_alignParentLeft="true" 
+android:text="@string/custom_title_left" /> 
+</RelativeLayout> 

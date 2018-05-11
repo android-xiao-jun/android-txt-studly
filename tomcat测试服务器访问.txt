@@ -1,0 +1,68 @@
+package test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import sun.org.mozilla.javascript.internal.json.JsonParser;
+
+/**
+ * Servlet implementation class Test
+ */
+@WebServlet("/Test")
+public class Test extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=utf-8");
+		
+		//{"carId":"1","name":"admin","UserName":"user1"}
+		//BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
+		 //这里是服务器获取json数据
+		BufferedReader reader = request.getReader();
+		String input = null;
+		StringBuilder requestBody = new StringBuilder();
+		while((input = reader.readLine()) != null) {
+		  requestBody.append(input);
+		}
+		PrintWriter out = response.getWriter();
+		out.write("我读取到"+requestBody.toString()+"\n");
+		
+		JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("carId", "1");
+            jsonObject.put("name", "admin");
+            jsonObject.put("UserName", "user1");
+            //这里是json数据放回客户端
+            out.write("我回传到"+jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        out.close();
+	}
+}

@@ -1,0 +1,12 @@
+android 播放音频使用MediaPlayer实现的
+ setDataSource  设置播放文件的位置
+ prepare 播放之前调用这个方法，准备工作
+ start 开始或继续播放
+ pause 暂停播放
+ reset 重置到刚刚创建的状态
+ seekTo 从指定位置播放音频
+ stop 停止播放，无法再播放音频
+ release 释放掉与MediaPlayer资源
+ isPlayer 判断是否播放
+ getDuration 获取载入音频时长
+《相关权限》  android.permission.WRITE_EXTERNAL_STORAGE 需要做运行时权限处理
