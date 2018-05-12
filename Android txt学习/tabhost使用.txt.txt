@@ -1,0 +1,44 @@
+tabHost的使用  布局控件 id必须是android:id/tabhost
+
+    <android.support.v4.app.FragmentTabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.app.FragmentTabHost>
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9" >
+    </FrameLayout>
+
+
+java中
+//找id
+        FragmentTabHost mTabHost= (FragmentTabHost) findViewById(android.R.id.tabhost);
+//建立联系
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+//设置tag值
+        String[] tag = {
+                "1", "2"
+        };
+        Class<?>[] cls = {
+//Fragment1的继承和处理一样
+                Fragment1.class, Fragment2.class
+        };
+        View[] views = {
+                getTabView("第一个按钮"), getTabView("第二个按钮")
+        };
+        for (int i = 0; i < tag.length; i++) {
+//addTab三个参数 标准写法，记住就行
+            mTabHost.addTab(mTabHost.newTabSpec(tag[i]).setIndicator(views[i]),cls[i], null);
+        }
+
+ private View getTabView(String resId) {
+//给按钮弄一个布局样式
+        View view = LayoutInflater.from(this).inflate(R.layout.tab, null);
+        TextView textView = (TextView) view.findViewById(R.id.content);
+        textView.setText(resId);
+        return view;
+ }

@@ -1,60 +1,87 @@
-HttpURLConnection访问网络
- new Thread(new Runnable() {
+public class HttpUrl {
+    public interface ResultHttpLisenter {
+        void response(String result);
+    }
+
+    @NonNull
+    public static void postHttpUrl(final String urlString, final String jsonStr, final ResultHttpLisenter lisenter) {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-               //postJson();
-               // postHttp();
-            }
-    }).start();
-//访问网络后放回一个json string数据
- public static String postHttp(String urlString,String params) {
-
-        try {
-            HttpURLConnection connection;
-            URL url=new URL("http://192.168.43.29:8090/test/Test");
-            connection= (HttpURLConnection) url.openConnection();
-
-            /**
-             * 请求头参数
-             */
-//            connection.setRequestProperty("accept", "*/*");
-//            connection.setRequestProperty("connection", "Keep-Alive");
-//            connection.setRequestProperty("Content-Type", "text/html; charset=UTF-8");
-            connection.setConnectTimeout(3000);
-            connection.setReadTimeout(3000);
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            
-            OutputStream outputStream = connection.getOutputStream();
-            OutputStreamWriter writer = new OutputStreamWriter(outputStream, "utf-8");
-            writer.write(params);
-            writer.flush();
-            outputStream.close();
-            writer.close();
-
-            InputStream inputStream = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String result = "";
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (result.equals("")) {
-                    result += line;
-                } else {
-                    result += "\n" + line;
+                String posthttp = null;
+                try {
+                    posthttp = posthttp(urlString, jsonStr);
+                    lisenter.response(posthttp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    lisenter.response(e.toString());
                 }
             }
-            inputStream.close();
-            reader.close();
-            Log.e("MainActivity","read"+result);
-            return result;
+        }).start();
+    }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return "";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        }
+    public static String posthttp(String urlString, String jsonStr) throws IOException {
+            URL mUrl  = new URL(urlString);
+            HttpURLConnection mConnection = (HttpURLConnection) mUrl.openConnection();
+            mConnection.addRequestProperty("accept", "*/*");
+            mConnection.setRequestProperty("connection", "Keep-Alive");
+            mConnection.addRequestProperty("Content-Type", "text/html;charset=utf-8");
+            mConnection.setConnectTimeout(3000);
+            mConnection.setReadTimeout(3000);
+            mConnection.setDoOutput(true);
+            mConnection.setDoInput(true);
+            mConnection.setRequestMethod("POST");
+
+            OutputStream os = mConnection.getOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(os);
+            writer.write(jsonStr);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            InputStream in = mConnection.getInputStream();
+            BufferedReader mReader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = mReader.readLine()) != null) {
+                result.append(line);
+            }
+            if (in != null) {
+                in.close();
+            }
+            if (mReader != null) {
+                mReader.close();
+            }
+            return result.toString();
 
     }
+
+//目前okhttp不能成功访问
+    public static void postJsonUrl(final String urlString, final String jsonStr, final ResultHttpLisenter lisenter) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                URL url = null;
+                try {
+                    url = new URL(urlString);
+                    OkHttpClient client = new OkHttpClient();
+
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), jsonStr);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .method("POST", requestBody)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String result = response.body().toString();
+                    lisenter.response(result);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+    }
+}

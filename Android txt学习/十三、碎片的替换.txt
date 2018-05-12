@@ -1,0 +1,49 @@
+有时候需要点击按钮切换不同现实，tabhost可以实现，但样式不好看，下面是通过替换碎片，来实现不同按钮点击切换
+1.初始化控件，需要点击按钮，需要变化的控件（一定要是Fragment）
+
+
+初始化其中一个碎片
+private void initFragment1() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (f1==null){
+//同样碎片处理方式和其他一样，onAttach，onCreateView，onActivityCreated
+            f1=new TiKu38_fragment1();
+            transaction.add(R.id.realtabcontent,f1);
+        }
+//显示当前控件前，先隐藏其他控件
+        hideFragment(transaction);
+        transaction.show(f1);
+        transaction.commit();
+        //0xFFFDEA71
+        textView1.setTextColor(0xFFFDEA71);
+}
+
+private void hideFragment(FragmentTransaction transaction) {
+        if (f1!=null){
+            transaction.hide(f1);
+        }
+        if (f2!=null){
+            transaction.hide(f2);
+        }
+        if (f3!=null){
+            transaction.hide(f3);
+        }
+        textView3.setTextColor(0xFF363636);
+        textView2.setTextColor(0xFF363636);
+        textView1.setTextColor(0xFF363636);
+}
+2.然后就是在点击事件中设置就行了
+ public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tiku_39_keji:
+                initFragment1();
+                break;
+            case R.id.tiku_39_jiaoyu:
+                initFragment2();
+                break;
+            case R.id.tiku_39_tiyu:
+                initFragment3();
+                break;
+        }
+ }
+
