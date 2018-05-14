@@ -1,0 +1,24 @@
+两次退出
+    //两次退出test
+    //event.getRepeatCount()点后退键的时候，为了防止点得过快，触发两次后退事件，故做此设置
+    private long time;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.e("onKeyDownonKeyDown",""+keyCode);
+        Log.e("onKeyDownonKeyDown",""+event);
+        if (keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0){
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if (System.currentTimeMillis()-time>2000){
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            time=System.currentTimeMillis();
+        }else {
+            finish();
+            System.exit(0);
+        }
+    }

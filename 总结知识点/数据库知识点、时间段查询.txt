@@ -1,0 +1,71 @@
+数据库
+
+创建一个数据库，需要一个帮助类去继承SQLiteOpenHelper
+实现两个方法onCreate和onUpgrade
+在onCreate中实现数据表的创建
+
+sql语句="例如：create table 表名(id Integer primary key autoincrement,name text,address varchar)";
+
+通过 db.execSQL("SQL语句")创建;
+通过 db.execSQL("drop table if exists 表名")删除（可以在update中添加）;
+
+
+1.通过构造方法，实现数据库的命名和创建，获取实例
+
+2.DBOpenHelper DB=new DBOpenHelper(this,"数据库名字.db",null,1);
+
+3.DB.getReadableDatabase();或者DB.getWritableDatabase();获取SQLiteDatabase对象db
+
+
+4.通过SQLiteDatabase对象去点  .方法
+Cursor cursor=db.query（"表名",.......）;然后遍历游标取值,最后一定要关游标
+db.insert("表名",null,vlause)插入数据;valuse是 ContentValues的实例
+db.update("表名",vlause,条件,条件值数组)更新表数据;valuse是 ContentValues的实例
+db.delete("表名",条件,条件值数组)删除表数据；
+
+5.数据库关闭
+db.close
+
+
+
+
+new出当前时间，获取毫秒值，减去自己想要查询的时间内
+ Date date = new Date();
+ long timmOld = date.getTime() - 60*000;
+
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//初始化当前时间
+String formatNow = simpleDateFormat.format(new Date());
+//当前时间减去60秒
+Date dateOld = new Date(date.getTime() - 60000);
+
+String formatOld = simpleDateFormat.format(dateOld);
+
+
+数据库时间查询语句  
+"字段名>=?and字段名<?"   ,new String[]{dateOld, formatNow},
+
+
+
+
+     例子
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formatNew = simpleDateFormat.format(date);
+                Log.e("formatNew",""+formatNew);
+                Date date1 = new Date(date.getTime() - 60000*1);
+                String formatOld= simpleDateFormat.format(date1);
+                Log.e("formatOld",""+formatOld);
+                YiJian31DB yiJian31DB=new YiJian31DB(MainActivity.this);
+                SQLiteDatabase db = yiJian31DB.getWritableDatabase();
+                Cursor cursor = db.query("testTime", null, "time >= ? and time<= ?",
+                        new String[]{formatOld, formatNew},
+                        null, null, null);
+                if (cursor.moveToFirst()){
+                    do {
+                        String time = cursor.getString(cursor.getColumnIndex("time"));
+                        Log.e("timetime",""+time);
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();

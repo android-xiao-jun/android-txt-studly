@@ -1,0 +1,50 @@
+LineChart mLineChart = (LineChart) findViewById(R.id.line_cart);
+
+List<String> xList = new ArrayList<>();
+1.给x轴创建数据
+        xList.add(0, "一月");
+        xList.add(1, "二月");
+        xList.add(2, "三月");
+        xList.add(3, "四月");
+        xList.add(4, "五月");
+        xList.add(5, "六月");
+2.给y轴添加值
+ List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Entry entry = new Entry((float) ((Math.random()) * 80), i);
+            entries.add(entry);
+        }
+//一个LineDataSet就是一条线，可以对每条线进行设置 如dataSet.setColor(Color.GRAY);
+LineDataSet dataSet = new LineDataSet(entries, "温度");
+LineData data = new LineData(mList);//对应横坐标标签和数据集
+data.addDataSet(dataSet);//也可以用集合
+mLineChart.setData(data);//设置显示数据
+//设置x轴的位置
+mLineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+mLineChart.setNoDataText("暂无数据显示");
+mLineChart.setDescription("设置描述信息");
+mLineChart.setDrawBorders(false);//在折线图上添加边框
+mLineChart.setDrawGridBackground(false); //表格颜色
+mLineChart.setTouchEnabled(true); //可点击
+mLineChart.setDragEnabled(true);  //可拖拽
+mLineChart.setScaleEnabled(true);  //可缩放
+mLineChart.setPinchZoom(false);
+//设置数据是否从0坐标开始
+mLineChart.getAxisLeft().setStartAtZero(false);
+        YAxis axisRight = mLineChart.getAxisRight(); //y轴右边标示
+        axisRight.setDrawAxisLine(false);
+        axisRight.setEnabled(false);//设置是否显示右边y轴
+        axisRight.setDrawGridLines(false);
+        axisRight.setDrawLabels(false);
+        左边同理
+
+
+
+
+<com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_cart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+        </com.github.mikephil.charting.charts.LineChart>
+

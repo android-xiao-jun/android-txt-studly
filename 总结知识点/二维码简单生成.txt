@@ -1,0 +1,32 @@
+public Bitmap createBitmap(String str) {
+        Bitmap bitmap1 = null;
+        try {
+            Map<EncodeHintType, String> hints = new HashMap<>();//也可以new一个hashtable
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            hints.put(EncodeHintType.ERROR_CORRECTION, "H");
+            //createQRCodeBitmap(content, size, "UTF-8", "H", "4", Color.BLACK, Color.WHITE, null, null, 0F);
+            //两种方式生成二维码
+            BitMatrix bitMatrix = new QRCodeWriter().encode(str, BarcodeFormat.QR_CODE, 400, 400, hints);
+            //以前zxing版本
+            // BitMatrix bitMatrix = new MultiFormatWriter().encode(str,BarcodeFormat.QR_CODE, 400, 400,hints);
+            //对BitMatrix操作
+
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+
+            int[] pixels = new int[width * height];        
+            for (int y = 0; y < height; y++) {
+                int offset = y * width;
+                for (int x = 0; x < width; x++) {
+                    pixels[offset + x] = bitMatrix.get(x, y) ? BLACK : WHITE;
+                }
+            }
+            bitmap1 = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bitmap1.setPixels(pixels, 0, width, 0, 0, width, height);
+
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return bitmap1;
+    }

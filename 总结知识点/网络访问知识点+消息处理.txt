@@ -1,0 +1,170 @@
+网络访问
+
+需要先写一个工具类（类写在下面，参照省赛写的）
+
+调用工具类方法必须传参数，空的也要（省赛服务器是这样的）
+ //result是线程返回的数据 需要解析
+  //解析json字符串，可以使用opt 和get都行
+  //解析完成后，更新界面需要回到主线程更新
+  //runOnUiThread是一种便捷处理ui更新，，
+JSONObject jsonObject=new JSONObject();
+jsonObject.put("CarId",carId);
+ HttpUrl.postHttpUrl(setJinE_carId, jsonObject.toString(), new HttpUrl.ResultHttpLisenter() {
+          @Override
+          public void response(final String result) {
+               try {
+                    String result1=new JSONObject(result).getString("serverinfo");
+                    final String result2=new JSONObject(result1).getString("result");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                           if ("ok".equals(result2)){
+  //这里可以更新UI
+                           Toast.makeText(ChongZhi1Activity.this, "充值成功", Toast.LENGTH_SHORT).show();
+                        }
+                      }
+                  });
+            } catch (JSONException e) {
+              e.printStackTrace();
+       }
+
+      }
+});
+
+  //还有更新UI的Handler和AsyncTask
+//AsyncTask 需要三个参数，
+第一个是传入的时候也是doInBackground(Void... params)中的参数，
+第二个是过程中需要显示的值得类型（比如下载进度）
+第三个就是返回的时候类型，可以用来更新界面
+如下（省赛）
+AsyncTask asyncTask = new AsyncTask<Void, Void, Map<String, Object>>() {
+            @Override
+            protected Map<String, Object> doInBackground(Void... params) {
+                String url = "http://"
+                        + getSharedPreferences("ipset", 0).getString("ip", "192.168.1.133") + ":"
+                        + 8080
+                        + "/transportservice/type/jason/action/";
+                Map<String, Object> map = null;
+                try {
+                    Envir envir = getEnvir(url);
+                    Log.e("++++++++++++++++", envir.getCo2() + "");
+//                    OneFragmentBean bean = getOneFragmentBean();
+                    Thread.sleep(100);
+                    int[] distance = new int[4];
+                    int[] d1 = getDistance(url, 1);
+                    Thread.sleep(100);
+                    int[] d2 = getDistance(url, 2);
+                    for (int i = 0; i < distance.length; i++) {
+                        if (i < 2) {
+                            distance[i] = d1[i];
+                        } else {
+                            distance[i] = d2[i - 2];
+                        }
+                    }
+                    map = new HashMap<String, Object>();
+                    map.put("envir", envir);
+//                    map.put("envir", bean);
+                    map.put("distance", distance);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return map;
+            }
+
+            @Override
+            protected void onPostExecute(Map<String, Object> map) {
+                super.onPostExecute(map);
+                upTextView(map);
+            }
+//最后需要execute()，不然没数据
+        }.execute();
+    }
+
+Handler是消息处理
+ private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //switch() case break....
+            if (msg.what == 1) {
+        //可以进行UI更新
+                mTvYuE.setText(banlance + "");
+            }
+        }
+ };
+new Thread(new Runnable(){
+  public void run(){
+     //处理网络访问
+     //结束后更新界面，发送消息
+     Message message=new Message();
+     message.what=1;
+     handler.sendMessage(message);
+  }
+}).start();
+
+
+
+
+
+
+ 一个网络访问工具类
+
+ public class HttpUrl {
+//这是一个借口，用来返回数据
+    public interface ResultHttpLisenter {
+        void response(String result);
+    }
+//这是一个帮助方法，内部直接实现了子线程访问
+    @NonNull
+    public static void postHttpUrl(final String urlString, final String jsonStr, final ResultHttpLisenter lisenter) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String posthttp = null;
+                try {
+                    posthttp = posthttp(urlString, jsonStr);
+                    lisenter.response(posthttp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    lisenter.response(e.toString());
+                }
+            }
+        }).start();
+    }
+//网络访问方法，调用此方法必须开启线程
+    public static String posthttp(String urlString, String jsonStr) throws IOException {
+            URL mUrl  = new URL(urlString);
+            HttpURLConnection mConnection = (HttpURLConnection) mUrl.openConnection();
+            mConnection.addRequestProperty("accept", "*/*");
+            mConnection.setRequestProperty("connection", "Keep-Alive");
+            mConnection.addRequestProperty("Content-Type", "text/html;charset=utf-8");
+            mConnection.setConnectTimeout(3000);
+            mConnection.setReadTimeout(3000);
+            mConnection.setDoOutput(true);
+            mConnection.setDoInput(true);
+            mConnection.setRequestMethod("POST");
+
+            OutputStream os = mConnection.getOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(os);
+            writer.write(jsonStr);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            InputStream in = mConnection.getInputStream();
+            BufferedReader mReader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = mReader.readLine()) != null) {
+                result.append(line);
+            }
+            if (in != null) {
+                in.close();
+            }
+            if (mReader != null) {
+                mReader.close();
+            }
+            return result.toString();
+
+    }
+}

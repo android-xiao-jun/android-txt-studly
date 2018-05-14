@@ -1,0 +1,298 @@
+一、Spinner 控件
+
+  1.适配器的创建
+    String[] carIds={"",""};//或者获取array文件下的数组 getResources().getStringArray(R.array.carid);
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, carIds);
+    adapter.setDropDownViewResource(R.layout.spinner_item);
+  2.给spinner设置适配器
+    .setAdapter(adapter);
+  3.spinner的监听
+    .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //position就是每一个小item的编号，从0开始
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+二、文字滚动
+            <TextView
+            android:textSize="25sp"
+            android:text="深海高速胶州、莱西服务器封闭施工通知"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+//下面六行代码需要添加，才能实现滚动，宽度不能超过文字长度
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:scrollHorizontally="true"  />
+
+
+
+三、视频的播放
+1.准备视频，findviewbyid   VideoView videoView=findViewById
+2.//创建一个视频管理器
+MediaController controller = new MediaController(context);
+3.//设置管理器
+videoView.setMediaController(controller);
+4.如果视频文件放入raw下，需要这样播放
+videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.movice));
+videoView.start();
+5.关闭视频
+videoView.stopPlayback();
+
+四、手势缩放图片
+需要自定义图片类 extends ImageView
+注：查看  图片手势放大.txt
+
+五、折线图
+LineChart
+
+六、条形图
+BarChart  和横向的 HorizontalBarChart 
+七、饼图
+PieChart（不是很会）
+
+八、ProgressDialog的使用
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("提示");
+        progressDialog.setMessage("获取网络数据中...");
+        progressDialog.setCancelable(false);
+progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);设置样式，横竖
+在需要显示的时候调用   
+   progressDialog.show(); 
+在需要关闭的时候调用（需要考虑没有获取数据的时候关闭，不然一直开着）   
+   progressDialog.cancel(); 
+
+九、数组排序
+ Collections.sort(list, new Comparator<DengBean>() {
+            @Override
+            public int compare(DengBean o1, DengBean o2) {
+//这里放回一个int值，
+//可以通过前后值互减，大于0 则互换，否则不做修改
+//如 o1.红灯时间-o2.红灯时间=1,return 互减结果>0，则换位置
+//降序相反
+                return 0;
+            }
+        });
+//这是一个list顺序颠倒
+ Collections.reverse(需要颠倒顺序的list);
+
+
+十、GridView网格布局（ListView差不多，只是多了一行几个）
+1.最主要属性 android:numColumns="3"其他很常规
+
+2.数据适配器，，和listview一样
+3.点击事件 .setOnItemClickListener和list也一样
+
+
+
+
+特别注意：倘若需要对list中，子布局的小控件设点击事件，需要在适配器中设置，
+比如账户管理，批量充值，则可以修改list中的bool类型值，最后传给需要操作充值的地方
+
+
+
+
+
+十一、定时器
+全局定义
+1.
+private Timer timer;
+initview的时候 实例化  timer = new Timer();
+2.
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (timer != null) {
+            timer.purge();
+            timer.cancel();
+        }
+    }
+3.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (timer != null) {
+            timer=new Timer();
+            //参数二第一次多少毫秒后执行，参数三每隔多少毫秒执行一次
+            timer.schedule(new TimerTaskTest3(), 500, 3000);
+        }
+    }
+4.
+   private class TimerTaskTest3 extends TimerTask {
+        @Override
+        public void run() {
+          //需要在定时器中处理的事情
+            getData();
+        }
+    }
+
+十二、ViewPager的使用
+1.ViewPager的使用+Fragment   和ViewPager加view（不太好用）
+其中集合数据的设置
+ mViewPager = (ViewPager) findViewById(R.id.viewpager_6);
+   List<Fragment> mViews= new ArrayList<>();
+//添加继承Fragment的碎片
+   mViews.add(new Fragment1());
+   mViews.add(new Fragment2());
+  
+2.适配器创建extends FragmentPagerAdapter 
+如 MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mViews);
+   mViewPager.setAdapter(adapter);
+注：碎片中默认不会自动生成需要实现的几个方法，需要手动添加(见碎片的处理和使用.txt)
+
+viewPager下面小圆点可以这么实现
+List<ImageView> mDots = new ArrayList<>();
+//有多少个找多少个
+ImageView dotFirst = (ImageView) findViewById(R.id.image_1);
+ImageView dotFSecond = (ImageView) findViewById(R.id.image_2);
+mDots.add(dotFirst);
+mDots.add(dotFSecond);
+int oldPosition=0;//记录当前点的位置。
+
+viewpager监听事件
+mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mDots.get(oldPosition).setBackgroundColor(Color.GREEN);
+                mDots.get(position).setBackgroundColor(Color.RED);
+                oldPosition = position;
+                title=titles[position];//这两个是设置标题的
+                mTitle.setText(title);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+十三、碎片的替换
+碎片的替换.txt
+
+
+十四、SharedPreferences保存
+获取实例 sp=getSharedPreferences("名字", MODE_PRIVATE);
+获取编辑器 sp.edit();
+写入 edit.putString("key", valuse);
+提交 edit.commit()；
+
+
+十五、Switch开关
+监听 .setOnCheckedChangeListener 其中isChecked表示开关状态
+
+
+十六、日历控件CalendarView以及日历控件对话框DatePickerDialog
+DatePickerDialog的初始化
+      dp = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int iyear, int monthOfYear, int dayOfMonth) {
+                long maxDate = datePicker.getMaxDate();//日历最大能设置的时间的毫秒值
+                iyear,选中的年，monthOfYear选中的月， dayOfMonth选中的天（月）
+                Toast.makeText(getApplicationContext(), iyear + ":" + (monthOfYear + 1) + ":" + dayOfMonth, Toast.LENGTH_LONG).show();
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+同样dp.show();显示出来
+
+
+同样CalendarView需要findbyid
+点击不同时间日期监听
+calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+           public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String strTime = "你选择的时间：" + year + "年" + month + "月" + dayOfMonth + "日";
+                Log.e("calendarView", "" + strTime);
+            }
+        });
+
+十七、动画
+播放动画，看Android小动画.txt
+
+过渡动画overridePendingTransition(R.anim.right_in,R.anim.left_out);
+其中right_in
+    <translate android:fromXDelta="100%p"
+        android:toXDelta="0%p"
+        android:duration="1500"/>
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"
+        android:duration="1500"/>
+其中left_out
+    <translate android:fromXDelta="0%p"
+        android:toXDelta="-100%p"
+        android:duration="1500"/>
+    <alpha
+        android:fromAlpha="1"
+        android:toAlpha="0"
+        android:duration="1500"/>
+其他则相同  
+注：Android小动画.txt
+
+十八、tabHost使用
+注：tabhost使用.txt
+
+
+
+十九、可扩展ExpandableListView
+1.布局的引用
+<ExpandableListView
+        android:id="@+id/test_expandablelist1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+</ExpandableListView>
+2.多种适配器数据适配
+第一种（Map<String, List<T>>）
+第二种二维数组String （遇到图片可能解决不了）
+
+3.适配器的创建
+extends BaseExpandableListAdapter并实现里面方法
+1.构成三个参数方法，上下文，map，map的key的String数组
+ getGroupCount()是获取分组数目
+ getChildrenCount是获取子布局数目
+ getGroup父布局反回类型
+ getChild子布局反回类型
+ getGroupId和getChildId  id同listview
+ isChildSelectable 子布局是否可选择
+ 最重要的两个
+ getGroupView和getChildView  view同list
+ 
+ hasStableIds用不上，默认false
+
+4.list子项目监听事件，setOnChildClickListener
+
+
+
+注意：可能用到的意图   
+打开设置页 面意图 Intent intent = new Intent(Settings.ACTION_SETTINGS);
+拨打电话页面  Uri uri1 = Uri.parse("tel:01088888888");Intent it = new Intent(Intent.ACTION_DIAL, uri1);
+直接拨打电话 Uri uri1 = Uri.parse("tel:01088888888");Intent it = new Intent(Intent.ACTION_CALL, uri1);
+发送短信
+Uri uri = Uri.parse("smsto:0800000123"); 
+Intent it = new Intent(Intent.ACTION_SENDTO, uri); 
+it.putExtra("sms_body", "The SMS text"); 
+startActivity(it);
+打开相机 意图MediaStore.ACTION_IMAGE_CAPTURE;
+打开通讯录 意图 Intent.ACTION_PICK 同时需要setData（content://contacts/phones）
+
+横竖屏问题：
+android:configChanges="orientation|keyboardHidden|screenSize"
+设置之后无论横屏还是竖屏都会回重启activity
+只竖屏显示的话(android:screenOrientation="portrait") 
+只横屏显示的话（android:screenOrientation="landscape"）
+
+

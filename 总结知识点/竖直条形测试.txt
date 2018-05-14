@@ -1,0 +1,45 @@
+BarChart barChart= view.findViewById(R.id.bar_chart);
+BarData data;
+BarDataSet dataSet;
+
+ArrayList<BarEntry> entries = new ArrayList<>();//显示条目
+for (int i = 0; i < 20; i++) {
+//添加值
+entries.add(new BarEntry(profit, i));
+}
+dataSet = new BarDataSet(entries, "");
+//同样可以data.add()添加
+//属性设置和linechart差不多
+data = new BarData(mList, dataSet);
+barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+barChart.setDescription("");
+barChart.setDrawBorders(false);//在折线图上添加边框
+barChart.setDrawGridBackground(false); //表格颜色
+barChart.setDescription("");
+barChart.setDrawBorders(false);
+barChart.getAxisRight().setEnabled(false);
+barChart.setData(data);
+
+
+
+
+
+
+注释*
+横向显示的柱形图和竖直显示的柱形图内容代码基本一样
+区别：
+横向
+ <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/horizontal_bar"
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+        </com.github.mikephil.charting.charts.HorizontalBarChart>
+和
+竖直
+com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+        </com.github.mikephil.charting.charts.BarChart>

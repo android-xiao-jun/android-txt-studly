@@ -1,0 +1,53 @@
+java
+
+AnimationDrawable drawable= (AnimationDrawable) mIvShow.getBackground();
+drawable.start();
+
+需要播放动画的空间下设置
+android:background="@drawable/my_anim"
+
+最后在drawable下创建资源
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <!-- 静态图片 -->
+    <item android:drawable="@drawable/img1"
+        android:duration="1000"></item>
+    <item android:drawable="@drawable/img2"
+        android:duration="1000"></item>
+    <item android:drawable="@drawable/img3"
+        android:duration="1000"></item>
+</animation-list>
+
+
+
+list加载小动画
+
+anim文件
+       <translate android:fromXDelta="-100%p"
+        android:toXDelta="0%p"
+        android:fillAfter="true"
+        android:duration="1500"/>
+
+Animation animation= AnimationUtils.loadAnimation(this,11);
+LayoutAnimationController controller=new LayoutAnimationController(animation);
+controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+listView.setLayoutAnimation(controller);
+
+过渡动画overridePendingTransition(R.anim.right_in,R.anim.left_out);
+其中right_in
+    <translate android:fromXDelta="100%p"
+        android:toXDelta="0%p"
+        android:duration="1500"/>
+    <alpha
+        android:fromAlpha="0"
+        android:toAlpha="1"
+        android:duration="1500"/>
+其中left_out
+    <translate android:fromXDelta="0%p"
+        android:toXDelta="-100%p"
+        android:duration="1500"/>
+    <alpha
+        android:fromAlpha="1"
+        android:toAlpha="0"
+        android:duration="1500"/>

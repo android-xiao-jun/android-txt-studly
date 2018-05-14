@@ -1,0 +1,22 @@
+ 继承v4包下的Fragment实现下面几个方法
+
+@Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+      //获取上下文
+    }
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = LayoutInflater.from(context).inflate(R.layout.wendu_viewpager, null);
+        lineChart = view.findViewById(R.id.line_cart_fragment);
+        huanJing4DB = new HuanJing4DB(context);
+        return view;
+     //初始化视图
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+       //这里面执行数据的显示更新，界面的好看与否 ,不建议在onCreateView初始化数据
+    }
