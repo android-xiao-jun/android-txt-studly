@@ -1,0 +1,94 @@
+侧滑栏
+
+最外侧需要添加一个android.support.v4.widget.DrawerLayout控件布局
+android:layout_gravity="start"属性即可显示在左侧，隐藏
+Java中需要添加
+DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
+//这个是主要代码
+mDrawerLayout.openDrawer(GravityCompat.START);
+
+
+java代码
+如果使用的是toolbar
+ Toolbar toolbar = findViewById(R.id.tool_bar);
+ setSupportActionBar(toolbar);
+ ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
+        }
+ NavigationView navigationView = findViewById(R.id.nav);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    //这里设置菜单点击事件
+                }
+                return true;
+            }
+        });
+
+ @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+       //如果是toolbar需要在这里开启侧滑功能
+                drawerLayout.openDrawer(Gravity.START);
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+
+
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/drawerlayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+        <!--这里是主布局内容 -->
+        <TextView
+            android:text="hello"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--这里是菜单内容 -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav"
+        android:layout_width="300dp"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+//添加头的样式
+        app:headerLayout="@layout/nav_header"
+//添加菜单
+        app:menu="@menu/tool_bar_menu">
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
+
+
+
+

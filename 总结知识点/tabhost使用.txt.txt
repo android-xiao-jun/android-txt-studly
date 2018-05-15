@@ -38,7 +38,7 @@ java中
  private View getTabView(String resId) {
 //给按钮弄一个布局样式
         View view = LayoutInflater.from(this).inflate(R.layout.tab, null);
-        TextView textView = (TextView) view.findViewById(R.id.content);
+        TextView textView = (TextView) view.findViewById(R.id.cointent);
         textView.setText(resId);
         return view;
  }
